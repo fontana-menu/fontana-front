@@ -1,31 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import styled from 'styled-components'
-import { getFood } from '../api/gets'
+import { Recipes } from '../context/Food.context'
+import { categories } from '../utils/constants'
+import Group from './Group'
 
 const Home = () => {
-  const [menu, setMenu] = useState([])
-
-  const fetchFood = async (lang = 'es') => {
-    try {
-      const res = await getFood(lang)
-      const recipes = res.data
-      setMenu(recipes)
-    } catch (err) {
-      console.log('Error fetching menu: ', err)
-    }
-  }
-
-  useEffect(() => {
-    fetchFood()
-  }, [])
+  const menu = useContext(Recipes)
 
   return (
     <Wrapper>
-      {menu.map(recipe => (
-        <Recipe>
-          <h2>{recipe.name}</h2>
-          {recipe.description && <p>{recipe.description}</p>}
-        </Recipe>
+      {categories.map((item, i) => (
+        <Group category={item} recipes={menu.filter(recipe => recipe.category === item)} key={i} />
       ))}
     </Wrapper>
   )
@@ -35,12 +20,7 @@ export default Home
 
 const Wrapper = styled.div`
   min-height: 1000px;
-  width: 1000px;
+  width: 60%;
   border: 1px solid black;
-`
-const Recipe = styled.div`
-  margin: 10px 0 10px 5px;
-  > h2 {
-    text-transform: capitalize;
-  }
+  padding: 0 3%;
 `
