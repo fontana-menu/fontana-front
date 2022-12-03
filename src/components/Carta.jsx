@@ -3,16 +3,20 @@ import styled from 'styled-components'
 import { Recipes } from '../context/Food.context'
 import { categories } from '../utils/constants'
 import Group from './Group'
+import Header from './Header'
 
 const Carta = () => {
   const menu = useContext(Recipes)
 
   return (
-    <Wrapper>
-      {categories.map((item, i) => (
-        <Group category={item} recipes={menu.filter(recipe => recipe.category === item)} key={i} />
-      ))}
-    </Wrapper>
+    <>
+      <Header />
+      <Wrapper>
+        {categories.map((item, i) => (
+          <Group category={item} recipes={menu.filter(recipe => recipe.category === item)} key={i} />
+        ))}
+      </Wrapper>
+    </>
   )
 }
 
@@ -24,10 +28,11 @@ const Wrapper = styled.div`
   padding: 0 3%;
   margin: 20px 0;
   display: inline-block;
-  /* border: 3px solid #6b6b6b; */
-  border-radius: 2% 3% 4% 4% / 2% 2% 3% 4%;
+  /* border: 1px solid #6b6b6b; */
+  box-shadow: 0px 0px 50px 20px black;
+  border-radius: 38px 38px 38px 38px / 80px 80px 80px 80px;
   position: relative;
   background-image: url(/images/paper-texture.jpeg);
   background-repeat: repeat-y;
-  background-size: contain;
+  background-size: cover;
 `
