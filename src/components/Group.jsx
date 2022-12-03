@@ -8,7 +8,11 @@ const Group = ({ category, recipes }) => {
         <Recipe key={item._id}>
           <Title>
             <h3>{item.name}</h3>
-            <span>{new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2 }).format(item.price)}</span>
+            <span>
+              {item.price === 0.01
+                ? 'S/M'
+                : new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2 }).format(item.price)}
+            </span>
           </Title>
           {item.description && <p>{item.description}</p>}
         </Recipe>

@@ -26,11 +26,17 @@ export default createGlobalStyle`
     }
     body {
         font-family: 'CenturyGothic', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        max-height: 100vh;
     }
     #root {
         width: 100vw;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
+        background-image: url(/images/wood-wall-background.jpeg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
     }
 `
