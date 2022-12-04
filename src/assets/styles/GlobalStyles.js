@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components'
 import CenturyGothic from '../fonts/century-gothic/CenturyGothic.ttf'
 import CenturyGothicBold from '../fonts/century-gothic/gothicb.ttf'
 import CenturyGothicItalic from '../fonts/century-gothic/gothici.ttf'
+import ModernLoveRegular from '../fonts/ModernLoveRegular.ttf'
 
 export default createGlobalStyle`
     @font-face {
@@ -18,6 +19,10 @@ export default createGlobalStyle`
         font-family: 'CenturyGothic';
         src: local('CenturyGothicItalic'), url(${CenturyGothicItalic});
         font-style: italic;
+    }
+    @font-face {
+        font-family: ModernLove;
+        src: local(ModernLove), url(${ModernLoveRegular});
     }
     * {
         box-sizing: border-box;
