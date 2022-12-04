@@ -1,17 +1,19 @@
 import { useContext } from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { Recipes } from '../context/Food.context'
 import { categories } from '../utils/constants'
 import Group from './Group'
 import Header from './Header'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 const Carta = () => {
   const menu = useContext(Recipes)
+  const [parent] = useAutoAnimate({ duration: 400 })
 
   return (
     <>
       <Header />
-      <Wrapper>
+      <Wrapper ref={parent}>
         {categories.map((item, i) => (
           <Group category={item} recipes={menu.filter(recipe => recipe.category === item)} key={i} />
         ))}
@@ -22,23 +24,11 @@ const Carta = () => {
 
 export default Carta
 
-const appear = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateY(500px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-`
-
 const Wrapper = styled.div`
-  min-height: 1000px;
   width: 60%;
   padding: 35px 3% 50px;
   margin: 20px 0;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   row-gap: 15px;
   box-shadow: 0px 0px 50px 20px black;
@@ -46,6 +36,5 @@ const Wrapper = styled.div`
   position: relative;
   background-image: url(/images/paper-texture.jpeg);
   background-repeat: repeat-y;
-  background-size: contain;
-  animation: ${appear} 2s ease;
+  background-size: contain cover;
 `

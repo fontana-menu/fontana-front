@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { FaChevronCircleDown } from 'react-icons/fa'
 
 const Group = ({ category, recipes }) => {
@@ -8,7 +8,7 @@ const Group = ({ category, recipes }) => {
     <>
       <Title>
         <H2 onClick={() => setIsVisible(!isVisible)}>{category}</H2>
-        <Arrow unfolded={isVisible} />
+        <Arrow onClick={() => setIsVisible(!isVisible)} unfolded={isVisible.toString()} />
       </Title>
       {isVisible &&
         recipes.map(item => (
@@ -34,10 +34,10 @@ const Title = styled.div`
   display: flex;
   column-gap: 1em;
   align-items: center;
+  width: 100%;
 `
 const H2 = styled.h2`
   padding: 20px 0;
-  display: inline-block;
   text-decoration: underline;
   text-transform: uppercase;
   :hover {
@@ -45,19 +45,13 @@ const H2 = styled.h2`
   }
 `
 const Arrow = styled(FaChevronCircleDown)`
-  transform: ${({ unfolded }) => (unfolded ? 'rotate(0)' : 'rotate(-90deg)')};
+  transform: ${({ unfolded }) => (unfolded === 'true' ? 'rotate(0)' : 'rotate(-90deg)')};
   transition: all 0.5s ease;
-`
-const unfold = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
+  :hover {
+    cursor: pointer;
   }
 `
 const Recipe = styled.div`
-  animation: ${unfold} 2s;
   > p {
     padding-left: 5%;
     max-width: 65%;
