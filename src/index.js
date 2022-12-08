@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import GlobalStyles from './assets/styles/GlobalStyles'
@@ -8,12 +8,14 @@ import LangProvider from './context/lang.context'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-  <BrowserRouter>
-    <LangProvider>
-      <RecipesProvider>
-        <GlobalStyles />
-        <App />
-      </RecipesProvider>
-    </LangProvider>
-  </BrowserRouter>
+  <StrictMode>
+    <BrowserRouter>
+      <LangProvider>
+        <RecipesProvider>
+          <GlobalStyles />
+          <App />
+        </RecipesProvider>
+      </LangProvider>
+    </BrowserRouter>
+  </StrictMode>
 )
