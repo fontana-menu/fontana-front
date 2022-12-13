@@ -1,25 +1,40 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
 import { Recipes } from '../context/Food.context'
-import { categories } from '../utils/constants'
+import { categories_es, categories_cat } from '../utils/constants'
 import Group from './Group'
 import Header from './Header'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { Lang } from '../context/lang.context'
 
 const Carta = () => {
   const menu = useContext(Recipes)
+  const { lang } = useContext(Lang)
   const [parent] = useAutoAnimate({ duration: 400 })
 
-  return (
-    <>
-      <Header />
-      <Wrapper ref={parent}>
-        {categories.map((item, i) => (
-          <Group category={item} recipes={menu.filter(recipe => recipe.category === item)} key={i} />
-        ))}
-      </Wrapper>
-    </>
-  )
+  if (lang === 'es')
+    return (
+      <>
+        <Header />
+        <Wrapper ref={parent}>
+          {categories_es.map((item, i) => (
+            <Group category={item} recipes={menu?.filter(recipe => recipe.category === item)} key={i} />
+          ))}
+        </Wrapper>
+      </>
+    )
+
+  if (lang === 'cat')
+    return (
+      <>
+        <Header />
+        <Wrapper ref={parent}>
+          {categories_cat.map((item, i) => (
+            <Group category={item} recipes={menu?.filter(recipe => recipe.category === item)} key={i} />
+          ))}
+        </Wrapper>
+      </>
+    )
 }
 
 export default Carta

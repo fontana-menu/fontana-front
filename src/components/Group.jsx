@@ -7,7 +7,11 @@ const Group = ({ category, recipes }) => {
   return (
     <>
       <Title>
-        <H2 onClick={() => setIsVisible(!isVisible)}>{category}</H2>
+        <H2 onClick={() => setIsVisible(!isVisible)}>
+          {category}
+          {category === 'nuestros asados' && <span style={{ textTransform: 'lowercase' }}> (por encargo)</span>}
+          {category === 'els nostres rostits' && <span style={{ textTransform: 'lowercase' }}> (per encàrrec)</span>}
+        </H2>
         <Arrow onClick={() => setIsVisible(!isVisible)} unfolded={isVisible.toString()} />
       </Title>
       {isVisible &&
@@ -38,8 +42,8 @@ const Title = styled.div`
 `
 const H2 = styled.h2`
   padding: 20px 0;
-  text-decoration: underline;
   text-transform: uppercase;
+  font-family: ModernLove, serif;
   :hover {
     cursor: pointer;
   }
