@@ -1,27 +1,25 @@
-import { createContext, useCallback, useContext, useEffect, useState } from 'react'
+import { createContext, useCallback, /* useEffect, */ useState } from 'react'
 import { getFood } from '../api/gets'
-import { Lang } from './lang.context'
 
 export const Recipes = createContext()
 
 const RecipesProvider = ({ children }) => {
-  const [menu, setMenu] = useState([])
-  const { lang } = useContext(Lang)
+  const [menu, setMenu] = useState({})
 
   const fetchFood = useCallback(async () => {
     try {
-      const res = await getFood(lang)
-      const recipes = res.data
-      setMenu(recipes)
+      const res = await getFood()
+      const carta = res.data
+      setMenu(carta)
     } catch (err) {
       console.log('Error fetching menu: ', err)
     }
-  }, [lang])
+  }, [])
 
-  useEffect(() => {
+  /* useEffect(() => {
     fetchFood()
-  }, [lang, fetchFood])
+  }, [fetchFood]) */
 
-  return <Recipes.Provider value={menu}>{children}</Recipes.Provider>
+  return <Recipes.Provider value={{ menu, fetchFood }}>{children}</Recipes.Provider>
 }
 export default RecipesProvider

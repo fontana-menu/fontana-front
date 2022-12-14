@@ -1,3 +1,3 @@
 import { api } from './axios.config'
 
-export const getFood = lang => api.get(`/${lang}/food`)
+export const getFood = () => api.get('/food')

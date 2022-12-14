@@ -1,24 +1,29 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { Recipes } from '../context/Food.context'
-import { categories_es, categories_cat } from '../utils/constants'
 import Group from './Group'
 import Header from './Header'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { Lang } from '../context/lang.context'
+import { Lang } from '../context/Lang.context'
 
 const Carta = () => {
-  const menu = useContext(Recipes)
+  const { menu, fetchFood } = useContext(Recipes)
   const { lang } = useContext(Lang)
   const [parent] = useAutoAnimate({ duration: 400 })
+
+  useEffect(() => {
+    fetchFood()
+  }, [fetchFood])
+
+  if (!menu.es || !menu.cat) return null
 
   if (lang === 'es')
     return (
       <>
         <Header />
         <Wrapper ref={parent}>
-          {categories_es.map((item, i) => (
-            <Group category={item} recipes={menu?.filter(recipe => recipe.category === item)} key={i} />
+          {menu.es.categories.map((item, i) => (
+            <Group category={item} recipes={menu.es.recipes.filter(recipe => recipe.category === item)} key={i} />
           ))}
         </Wrapper>
       </>
@@ -29,8 +34,8 @@ const Carta = () => {
       <>
         <Header />
         <Wrapper ref={parent}>
-          {categories_cat.map((item, i) => (
-            <Group category={item} recipes={menu?.filter(recipe => recipe.category === item)} key={i} />
+          {menu.cat.categories.map((item, i) => (
+            <Group category={item} recipes={menu.cat.recipes.filter(recipe => recipe.category === item)} key={i} />
           ))}
         </Wrapper>
       </>
