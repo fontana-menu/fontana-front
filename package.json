@@ -5,6 +5,7 @@
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.5",
     "axios": "^1.2.0",
+    "framer-motion": "^7.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",

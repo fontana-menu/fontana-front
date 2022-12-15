@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
 
 const Home = () => {
   return (
-    <>
+    <motion.div style={{ textAlign: 'center' }} initial={{ y: 0 }} animate={{ y: 0 }} exit={{ y: -window.innerHeight }}>
       <Title>Restaurante La Fontana</Title>
       <CustomLink to='/carta'>Carta</CustomLink>
-    </>
+    </motion.div>
   )
 }
 
