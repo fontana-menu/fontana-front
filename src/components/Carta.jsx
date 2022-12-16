@@ -18,39 +18,26 @@ const Carta = () => {
 
   if (!menu.es || !menu.cat) return null
 
-  if (lang === 'es')
-    return (
-      <motion.div
-        style={{ width: '100%' }}
-        initial={{ y: window.innerHeight, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: window.innerHeight, opacity: 0 }}
-      >
-        <Header />
-        <Wrapper ref={parent}>
-          {menu.es.categories.map((item, i) => (
-            <Group category={item} recipes={menu.es.recipes.filter(recipe => recipe.category === item)} key={i} />
-          ))}
-        </Wrapper>
-      </motion.div>
-    )
-
-  if (lang === 'cat')
-    return (
-      <motion.div
-        style={{ width: '100%' }}
-        initial={{ y: window.innerHeight }}
-        animate={{ y: 0 }}
-        exit={{ y: window.innerHeight }}
-      >
-        <Header />
-        <Wrapper ref={parent}>
-          {menu.cat.categories.map((item, i) => (
-            <Group category={item} recipes={menu.cat.recipes.filter(recipe => recipe.category === item)} key={i} />
-          ))}
-        </Wrapper>
-      </motion.div>
-    )
+  return (
+    <motion.div
+      style={{ width: '100%' }}
+      initial={{ y: window.innerHeight, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: window.innerHeight, opacity: 0 }}
+    >
+      <Header />
+      <Wrapper ref={parent}>
+        {menu[lang].categories.map((item, i) => (
+          <Group
+            index={i}
+            category={item}
+            recipes={menu[lang].recipes.filter(recipe => recipe.category === item)}
+            key={i}
+          />
+        ))}
+      </Wrapper>
+    </motion.div>
+  )
 }
 
 export default Carta

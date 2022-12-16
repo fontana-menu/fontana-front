@@ -15,8 +15,8 @@ const LoginModal = ({ login, error }) => {
       <h3 style={{ marginBottom: '1em', textAlign: 'center' }}>Bienvenidos!</h3>
       {error && <p style={{ color: 'red', textAlign: 'center' }}>{error.message}</p>}
       <Form onSubmit={e => handleSubmit(e)}>
-        <Input ref={admin} type='text' required={true}></Input>
-        <Input ref={pass} type='password' required={true}></Input>
+        <Input ref={admin} type='text' required></Input>
+        <Input ref={pass} type='password' required></Input>
         <button>Entrar</button>
       </Form>
     </Wrapper>

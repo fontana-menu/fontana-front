@@ -1,8 +1,14 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { FaChevronCircleDown } from 'react-icons/fa'
+import { useLocation } from 'react-router-dom'
+import { ModalContext } from '../context/Modals.context'
+import { createPortal } from 'react-dom'
+import RecipesModal from './RecipesModal'
 
-const Group = ({ category, recipes }) => {
+const Group = ({ category, recipes, index }) => {
+  const { setModal } = useContext(ModalContext)
+  const location = useLocation()
   const [isVisible, setIsVisible] = useState(true)
   return (
     <>
@@ -13,6 +19,21 @@ const Group = ({ category, recipes }) => {
           {category === 'els nostres rostits' && <span style={{ textTransform: 'lowercase' }}> (per encàrrec)</span>}
         </H2>
         <Arrow onClick={() => setIsVisible(!isVisible)} unfolded={isVisible.toString()} />
+        {location.pathname === '/admin' && (
+          <button
+            onClick={() =>
+              setModal({
+                isVisible: true,
+                component: createPortal(
+                  <RecipesModal index={index} onClose={setModal} />,
+                  document.getElementById('modals')
+                ),
+              })
+            }
+          >
+            Nueva Receta
+          </button>
+        )}
       </Title>
       {isVisible &&
         recipes.map(item => (

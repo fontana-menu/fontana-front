@@ -5,14 +5,17 @@ import GlobalStyles from './assets/styles/GlobalStyles'
 import { BrowserRouter } from 'react-router-dom'
 import LangProvider from './context/Lang.context'
 import RecipesProvider from './context/Food.context'
+import ModalProvider from './context/Modals.context'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <BrowserRouter>
     <LangProvider>
       <RecipesProvider>
-        <GlobalStyles />
-        <App />
+        <ModalProvider>
+          <GlobalStyles />
+          <App />
+        </ModalProvider>
       </RecipesProvider>
     </LangProvider>
   </BrowserRouter>

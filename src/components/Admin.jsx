@@ -26,9 +26,8 @@ const Admin = () => {
   }, [fetchFood, isLogedIn, error])
 
   if (!menu.es || !menu.cat) return <LoginModal login={logAdmin} error={error} />
-
-  if (lang === 'es')
-    return (
+  return (
+    <>
       <motion.div
         style={{ width: '100%' }}
         initial={{ y: window.innerHeight, opacity: 0 }}
@@ -40,32 +39,18 @@ const Admin = () => {
           <div style={{ display: 'flex' }}>
             <button onClick={exit}>SALIR</button>
           </div>
-          {menu.es.categories.map((item, i) => (
-            <Group category={item} recipes={menu.es.recipes.filter(recipe => recipe.category === item)} key={i} />
+          {menu[lang].categories.map((item, i) => (
+            <Group
+              index={i}
+              category={item}
+              recipes={menu[lang].recipes.filter(recipe => recipe.category === item)}
+              key={i}
+            />
           ))}
         </Wrapper>
       </motion.div>
-    )
-
-  if (lang === 'cat')
-    return (
-      <motion.div
-        style={{ width: '100%' }}
-        initial={{ y: window.innerHeight }}
-        animate={{ y: 0 }}
-        exit={{ y: window.innerHeight }}
-      >
-        <Header />
-        <Wrapper ref={parent}>
-          <div style={{ display: 'flex' }}>
-            <button onClick={exit}>SALIR</button>
-          </div>
-          {menu.cat.categories.map((item, i) => (
-            <Group category={item} recipes={menu.cat.recipes.filter(recipe => recipe.category === item)} key={i} />
-          ))}
-        </Wrapper>
-      </motion.div>
-    )
+    </>
+  )
 }
 
 export default Admin

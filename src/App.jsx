@@ -3,17 +3,23 @@ import Carta from './components/Carta'
 import Home from './components/Home'
 import { AnimatePresence } from 'framer-motion'
 import Admin from './components/Admin'
+import { ModalContext } from './context/Modals.context'
+import { useContext } from 'react'
 
 const App = () => {
+  const { modal } = useContext(ModalContext)
   const location = useLocation()
   return (
-    <AnimatePresence>
-      <Routes location={location} key={location.pathname}>
-        <Route path='/' element={<Home />} />
-        <Route path='/carta' element={<Carta />} />
-        <Route path='/admin' element={<Admin />} />
-      </Routes>
-    </AnimatePresence>
+    <>
+      {modal.isVisible && modal.component}
+      <AnimatePresence>
+        <Routes location={location} key={location.pathname}>
+          <Route path='/' element={<Home />} />
+          <Route path='/carta' element={<Carta />} />
+          <Route path='/admin' element={<Admin />} />
+        </Routes>
+      </AnimatePresence>
+    </>
   )
 }
 

@@ -37,6 +37,14 @@ export default createGlobalStyle`
         background-attachment: fixed;
         background-color: black;
     }
+    #modals {
+        position: fixed;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+    }
     #root {
         width: 100vw;
         display: flex;
@@ -47,8 +55,12 @@ export default createGlobalStyle`
     button {
         align-self: center;
         padding: 5px 8px;
+        :hover {
+            cursor: pointer;
+        }
     }
-    input {
+    input, textarea {
         padding: 5px 8px;
+        resize: none;
     }
 `
