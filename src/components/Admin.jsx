@@ -13,7 +13,11 @@ const Admin = () => {
   const { menu, fetchFood } = useContext(Recipes)
   const { lang } = useContext(Lang)
   const [parent] = useAutoAnimate({ duration: 400 })
-  const { isLogedIn, logAdmin, exit, error } = useAuth()
+  const { isLogedIn, logAdmin, verify, exit, error } = useAuth()
+
+  useEffect(() => {
+    verify()
+  }, [])
 
   useEffect(() => {
     if (isLogedIn) {
@@ -53,6 +57,9 @@ const Admin = () => {
       >
         <Header />
         <Wrapper ref={parent}>
+          <div style={{ display: 'flex' }}>
+            <button onClick={exit}>SALIR</button>
+          </div>
           {menu.cat.categories.map((item, i) => (
             <Group category={item} recipes={menu.cat.recipes.filter(recipe => recipe.category === item)} key={i} />
           ))}

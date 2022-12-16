@@ -44,4 +44,11 @@ export default createGlobalStyle`
         align-items: center;
         justify-content: center;
     }
+    button {
+        align-self: center;
+        padding: 5px 8px;
+    }
+    input {
+        padding: 5px 8px;
+    }
 `
