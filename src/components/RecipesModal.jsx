@@ -1,10 +1,12 @@
-import { useContext, useRef } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { Recipes } from '../context/Food.context'
-import { createRecipe } from '../api/posts'
+import { createRecipe, editRecipe } from '../api/posts'
+import { getRecipe } from '../api/gets'
 
-const RecipesModal = ({ index, onClose }) => {
+const RecipesModal = ({ index, onClose, id = undefined }) => {
+  const [recipe, setRecipe] = useState(null)
   const { menu } = useContext(Recipes)
   const navigate = useNavigate()
   const name_es = useRef()
@@ -15,29 +17,47 @@ const RecipesModal = ({ index, onClose }) => {
 
   const handleNewRecipe = async event => {
     event.preventDefault()
-    const newRecipe = {
-      es: {
-        name: name_es.current.value,
-        description: description_es.current.value,
-        price: price.current.value,
-        category: menu.es.categories[index],
-      },
-      cat: {
-        name: name_cat.current.value,
-        description: description_cat.current.value,
-        price: price.current.value,
-        category: menu.cat.categories[index],
-      },
+    const recipe = {
+      name: [name_es.current.value, name_cat.current.value],
+      description: [description_es.current.value, description_cat.current.value],
+      price: price.current.value,
+      category: [menu.es.categories[index], menu.cat.categories[index]],
     }
     try {
-      const res = await createRecipe(newRecipe)
+      const res = id ? await editRecipe(id, recipe) : await createRecipe(recipe)
       onClose({ isVisible: false, component: null })
       alert(res.data.message)
-      navigate('/admin')
+      navigate(0)
     } catch (error) {
       console.log('There has been an error: ', error)
     }
   }
+
+  const fetchRecipe = useCallback(async id => {
+    try {
+      const res = await getRecipe(id)
+      setRecipe(res.data)
+    } catch (error) {
+      console.log('Error fetching recipe: ', error)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (id) {
+      fetchRecipe(id)
+    }
+  }, [fetchRecipe, id])
+
+  useEffect(() => {
+    if (recipe) {
+      price.current.value = recipe.price
+      name_es.current.value = recipe.name[0]
+      name_cat.current.value = recipe.name[1]
+      description_es.current.value = recipe.description[0]
+      description_cat.current.value = recipe.description[1]
+    }
+  }, [recipe])
+
   return (
     <>
       <BackDrop onClick={() => onClose({ isVisible: false, component: null })}></BackDrop>
@@ -60,7 +80,7 @@ const RecipesModal = ({ index, onClose }) => {
           <Label>
             Catalán: <textarea ref={description_cat} rows={5} cols={40} />
           </Label>
-          <button>Crear Receta</button>
+          <button>{id ? 'Guardar' : 'Crear Receta'}</button>
           <button
             onClick={e => {
               e.preventDefault()

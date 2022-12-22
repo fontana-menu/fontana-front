@@ -1,15 +1,27 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { FaChevronCircleDown } from 'react-icons/fa'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { ModalContext } from '../context/Modals.context'
 import { createPortal } from 'react-dom'
 import RecipesModal from './RecipesModal'
+import { MdDeleteForever, MdEdit } from 'react-icons/md'
+import { deleteRecipe } from '../api/posts'
 
 const Group = ({ category, recipes, index }) => {
   const { setModal } = useContext(ModalContext)
   const location = useLocation()
   const [isVisible, setIsVisible] = useState(true)
+  const navigate = useNavigate()
+
+  const handleDelete = async (id, name) => {
+    // eslint-disable-next-line no-restricted-globals
+    const conf = confirm(`Seguro que quieres eliminar la receta: ${name}?`)
+    if (!conf) return
+    const res = await deleteRecipe(id)
+    alert(res.data.message)
+    navigate(0)
+  }
   return (
     <>
       <Title>
@@ -37,9 +49,28 @@ const Group = ({ category, recipes, index }) => {
       </Title>
       {isVisible &&
         recipes.map(item => (
-          <Recipe isVisible={isVisible} key={item._id}>
+          <Recipe isVisible={isVisible} key={item.id}>
             <Name>
-              <h3>{item.name}</h3>
+              {location.pathname === '/admin' ? (
+                <div style={{ display: 'flex', columnGap: '10px', alignItems: 'center' }}>
+                  <RecipeName>{item.name}</RecipeName>
+                  <DeleteIcon size={30} onClick={() => handleDelete(item.id, item.name)} />
+                  <EditIcon
+                    size={30}
+                    onClick={() =>
+                      setModal({
+                        isVisible: true,
+                        component: createPortal(
+                          <RecipesModal index={index} onClose={setModal} id={item.id} />,
+                          document.getElementById('modals')
+                        ),
+                      })
+                    }
+                  />
+                </div>
+              ) : (
+                <RecipeName>{item.name}</RecipeName>
+              )}
               <span>
                 {item.price === 0.01
                   ? 'S/M'
@@ -86,7 +117,31 @@ const Name = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  > h3 {
-    text-transform: uppercase;
+`
+const RecipeName = styled.h3`
+  text-transform: uppercase;
+`
+const DeleteIcon = styled(MdDeleteForever)`
+  fill: #b40000;
+  padding: 3px;
+  border: 1px solid #b40000;
+  border-radius: 5px;
+  background-color: #f1a6a6;
+  :hover {
+    cursor: pointer;
+  }
+  :active {
+    box-shadow: inset 0px 0px 4px 1px black;
+  }
+`
+const EditIcon = styled(MdEdit)`
+  padding: 3px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  :hover {
+    cursor: pointer;
+  }
+  :active {
+    box-shadow: inset 0px 0px 4px 1px black;
   }
 `

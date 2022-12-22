@@ -16,10 +16,6 @@ const RecipesProvider = ({ children }) => {
     }
   }, [])
 
-  /* useEffect(() => {
-    fetchFood()
-  }, [fetchFood]) */
-
   return <Recipes.Provider value={{ menu, fetchFood }}>{children}</Recipes.Provider>
 }
 export default RecipesProvider
