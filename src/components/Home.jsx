@@ -14,7 +14,7 @@ const Home = () => {
 export default Home
 
 const Title = styled.h1`
-  margin-top: 4em;
+  margin: 200px 0 80px;
   color: white;
   font-size: 4em;
   font-family: ModernLove, serif;

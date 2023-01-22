@@ -8,7 +8,7 @@ import RecipesModal from './RecipesModal'
 import { MdDeleteForever, MdEdit } from 'react-icons/md'
 import { deleteRecipe } from '../api/posts'
 
-const Group = ({ category, recipes, index }) => {
+const Group = ({ id, category, recipes, index }) => {
   const { setModal } = useContext(ModalContext)
   const location = useLocation()
   const [isVisible, setIsVisible] = useState(true)
@@ -39,7 +39,7 @@ const Group = ({ category, recipes, index }) => {
                 component: createPortal(
                   <RecipesModal index={index} onClose={setModal} />,
                   document.getElementById('modals')
-                ),
+                )
               })
             }
           >
@@ -63,7 +63,7 @@ const Group = ({ category, recipes, index }) => {
                         component: createPortal(
                           <RecipesModal index={index} onClose={setModal} id={item.id} />,
                           document.getElementById('modals')
-                        ),
+                        )
                       })
                     }
                   />
