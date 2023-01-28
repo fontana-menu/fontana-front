@@ -63,4 +63,13 @@ export default createGlobalStyle`
         padding: 5px 8px;
         resize: none;
     }
+    a {
+        text-decoration: none;
+        color: #000000;
+        font-weight: bold;
+        font-size: 1.3em;
+        :hover {
+            text-decoration: underline;
+        }
+    }
 `

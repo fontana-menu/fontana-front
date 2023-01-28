@@ -1,45 +1,6 @@
-import { useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import { Recipes } from '../context/Food.context'
-import Group from './Group'
-import Header from './Header'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { Lang } from '../context/Lang.context'
-import { motion } from 'framer-motion'
 
-const Carta = () => {
-  const { menu, fetchFood } = useContext(Recipes)
-  const { lang } = useContext(Lang)
-  const [parent] = useAutoAnimate({ duration: 400 })
-
-  useEffect(() => {
-    fetchFood()
-  }, [fetchFood])
-
-  if (!menu.es || !menu.cat) return null
-
-  return (
-    <motion.div
-      style={{ width: '100%' }}
-      initial={{ y: window.innerHeight, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: window.innerHeight, opacity: 0 }}
-    >
-      <Header />
-      <Wrapper ref={parent}>
-        {menu[lang].categories.map((item, i) => (
-          <Group
-            index={i}
-            category={item}
-            recipes={menu[lang].recipes.filter(recipe => recipe.category === item)}
-            key={i}
-          />
-        ))}
-      </Wrapper>
-    </motion.div>
-  )
-}
-
+const Carta = ({ children }) => <Wrapper>{children}</Wrapper>
 export default Carta
 
 const Wrapper = styled.div`

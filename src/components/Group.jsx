@@ -8,7 +8,7 @@ import RecipesModal from './RecipesModal'
 import { MdDeleteForever, MdEdit } from 'react-icons/md'
 import { deleteRecipe } from '../api/posts'
 
-const Group = ({ category, recipes, index }) => {
+const Group = ({ category, recipes, index, info = null }) => {
   const { setModal } = useContext(ModalContext)
   const location = useLocation()
   const [isVisible, setIsVisible] = useState(true)
@@ -39,7 +39,7 @@ const Group = ({ category, recipes, index }) => {
                 component: createPortal(
                   <RecipesModal index={index} onClose={setModal} />,
                   document.getElementById('modals')
-                ),
+                )
               })
             }
           >
@@ -48,37 +48,40 @@ const Group = ({ category, recipes, index }) => {
         )}
       </Title>
       {isVisible &&
-        recipes.map(item => (
-          <Recipe isVisible={isVisible} key={item.id}>
-            <Name>
-              {location.pathname === '/admin' ? (
-                <div style={{ display: 'flex', columnGap: '10px', alignItems: 'center' }}>
+        recipes.map((item, i, r) => (
+          <>
+            <Recipe isVisible={isVisible} key={item.id}>
+              <Name>
+                {location.pathname === '/admin' ? (
+                  <div style={{ display: 'flex', columnGap: '10px', alignItems: 'center' }}>
+                    <RecipeName>{item.name}</RecipeName>
+                    <DeleteIcon size={30} onClick={() => handleDelete(item.id, item.name)} />
+                    <EditIcon
+                      size={30}
+                      onClick={() =>
+                        setModal({
+                          isVisible: true,
+                          component: createPortal(
+                            <RecipesModal index={index} onClose={setModal} id={item.id} />,
+                            document.getElementById('modals')
+                          )
+                        })
+                      }
+                    />
+                  </div>
+                ) : (
                   <RecipeName>{item.name}</RecipeName>
-                  <DeleteIcon size={30} onClick={() => handleDelete(item.id, item.name)} />
-                  <EditIcon
-                    size={30}
-                    onClick={() =>
-                      setModal({
-                        isVisible: true,
-                        component: createPortal(
-                          <RecipesModal index={index} onClose={setModal} id={item.id} />,
-                          document.getElementById('modals')
-                        ),
-                      })
-                    }
-                  />
-                </div>
-              ) : (
-                <RecipeName>{item.name}</RecipeName>
-              )}
-              <span>
-                {item.price === 0.01
-                  ? 'S/M'
-                  : new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2 }).format(item.price)}
-              </span>
-            </Name>
-            {item.description && <p>{item.description}</p>}
-          </Recipe>
+                )}
+                <span>
+                  {item.price === 0.01
+                    ? 'S/M'
+                    : new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2 }).format(item.price)}
+                </span>
+              </Name>
+              {item.description && <p>{item.description}</p>}
+            </Recipe>
+            {index === 7 && i === r.length - 1 && info}
+          </>
         ))}
     </>
   )
