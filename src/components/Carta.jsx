@@ -4,7 +4,7 @@ import { Recipes } from '../context/Food.context'
 import Group from './Group'
 import Header from './Header'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { Lang } from '../context/lang.context'
+import { Lang } from '../context/Lang.context'
 import { motion } from 'framer-motion'
 
 const Carta = () => {

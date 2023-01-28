@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-import { Lang } from '../context/lang.context'
+import { Lang } from '../context/Lang.context'
 
 const Header = () => {
   const { setLang } = useContext(Lang)
