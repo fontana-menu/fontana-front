@@ -35,7 +35,6 @@ const Food = () => {
       style={{ width: '100%' }}
       initial={{ y: window.innerHeight, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      exit={{ y: window.innerHeight, opacity: 0 }}
     >
       <Carta ref={parent}>
         <Heading>
