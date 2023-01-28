@@ -21,7 +21,7 @@ const RecipesModal = ({ index, onClose, id = undefined }) => {
       name: [name_es.current.value, name_cat.current.value],
       description: [description_es.current.value, description_cat.current.value],
       price: price.current.value,
-      category: [menu.es.categories[index], menu.cat.categories[index]],
+      category: [menu.es.categories[index], menu.cat.categories[index]]
     }
     try {
       const res = id ? await editRecipe(id, recipe) : await createRecipe(recipe)
