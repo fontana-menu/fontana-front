@@ -1,13 +1,12 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { Recipes } from '../context/Food.context'
 import { createRecipe, editRecipe } from '../api/posts'
 import { getRecipe } from '../api/gets'
 
 const RecipesModal = ({ index, onClose, id = undefined }) => {
   const [recipe, setRecipe] = useState(null)
-  const { menu } = useContext(Recipes)
+  const { menu } = useLoaderData()
   const navigate = useNavigate()
   const name_es = useRef()
   const description_es = useRef()

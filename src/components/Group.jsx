@@ -7,6 +7,7 @@ import { createPortal } from 'react-dom'
 import RecipesModal from './RecipesModal'
 import { MdDeleteForever, MdEdit } from 'react-icons/md'
 import { deleteRecipe } from '../api/posts'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const Group = ({ category, recipes, index, info = null }) => {
   const { setModal } = useContext(ModalContext)
@@ -47,42 +48,52 @@ const Group = ({ category, recipes, index, info = null }) => {
           </button>
         )}
       </Title>
-      {isVisible &&
-        recipes.map((item, i, r) => (
-          <>
-            <Recipe isVisible={isVisible} key={item.id}>
-              <Name>
-                {location.pathname === '/admin' ? (
-                  <div style={{ display: 'flex', columnGap: '10px', alignItems: 'center' }}>
-                    <RecipeName>{item.name}</RecipeName>
-                    <DeleteIcon size={30} onClick={() => handleDelete(item.id, item.name)} />
-                    <EditIcon
-                      size={30}
-                      onClick={() =>
-                        setModal({
-                          isVisible: true,
-                          component: createPortal(
-                            <RecipesModal index={index} onClose={setModal} id={item.id} />,
-                            document.getElementById('modals')
-                          )
-                        })
-                      }
-                    />
-                  </div>
-                ) : (
-                  <RecipeName>{item.name}</RecipeName>
-                )}
-                <span>
-                  {item.price === 0.01
-                    ? 'S/M'
-                    : new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2 }).format(item.price)}
-                </span>
-              </Name>
-              {item.description && <p>{item.description}</p>}
-            </Recipe>
-            {index === 7 && i === r.length - 1 && info}
-          </>
-        ))}
+      <AnimatePresence initial={false}>
+        {isVisible && (
+          <Recipes
+            initial={{ scaleY: 0, height: 0, opacity: 0 }}
+            animate={{ scaleY: 1, height: 'auto', opacity: 1 }}
+            exit={{ scaleY: 0, height: 0, opacity: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            {recipes.map((item, i, r) => (
+              <>
+                <Recipe isVisible={isVisible} key={item.id}>
+                  <Name>
+                    {location.pathname === '/admin' ? (
+                      <div style={{ display: 'flex', columnGap: '10px', alignItems: 'center' }}>
+                        <RecipeName>{item.name}</RecipeName>
+                        <DeleteIcon size={30} onClick={() => handleDelete(item.id, item.name)} />
+                        <EditIcon
+                          size={30}
+                          onClick={() =>
+                            setModal({
+                              isVisible: true,
+                              component: createPortal(
+                                <RecipesModal index={index} onClose={setModal} id={item.id} />,
+                                document.getElementById('modals')
+                              )
+                            })
+                          }
+                        />
+                      </div>
+                    ) : (
+                      <RecipeName>{item.name}</RecipeName>
+                    )}
+                    <span>
+                      {item.price === 0.01
+                        ? 'S/M'
+                        : new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2 }).format(item.price)}
+                    </span>
+                  </Name>
+                  {item.description && <p>{item.description}</p>}
+                </Recipe>
+                {index === 7 && i === r.length - 1 && info}
+              </>
+            ))}
+          </Recipes>
+        )}
+      </AnimatePresence>
     </>
   )
 }
@@ -110,6 +121,12 @@ const Arrow = styled(FaChevronCircleDown)`
     cursor: pointer;
   }
 `
+const Recipes = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  row-gap: 25px;
+  transform-origin: top center;
+`
 const Recipe = styled.div`
   > p {
     padding-left: 5%;
@@ -120,6 +137,7 @@ const Name = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 5px;
 `
 const RecipeName = styled.h3`
   text-transform: uppercase;
