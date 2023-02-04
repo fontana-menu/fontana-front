@@ -6,7 +6,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { Lang } from '../context/Lang.context'
 import { motion } from 'framer-motion'
 import { copies } from '../utils/constants'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import Carta from './Carta'
 
 const Food = () => {
@@ -37,9 +37,9 @@ const Food = () => {
       animate={{ y: 0, opacity: 1 }}
     >
       <Carta ref={parent}>
-        <Heading>
+        {/* <Heading>
           <Link to='/vinos'>{lang === 'es' ? 'Bebidas' : 'Begudes'}</Link>
-        </Heading>
+        </Heading> */}
         {menu[lang].categories.map((item, i) => (
           <Group
             index={i}
@@ -55,10 +55,10 @@ const Food = () => {
 }
 export default Food
 
-const Heading = styled.div`
+/* const Heading = styled.div`
   display: flex;
   align-items: center;
-`
+` */
 const SuplsTitle = styled.h3`
   margin-top: 30px;
   text-transform: uppercase;
