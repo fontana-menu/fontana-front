@@ -1,6 +1,10 @@
 import { api } from './axios.config'
 
-export const getFood = () => api.get('/food')
+export const getFood = async () => {
+  const res = await api.get('/food')
+  const menu = res.data
+  return { menu }
+}
 
 export const getDrinks = () => api.get('/drinks')
 

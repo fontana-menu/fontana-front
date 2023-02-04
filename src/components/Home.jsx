@@ -20,13 +20,16 @@ const Wrapper = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 `
 
 const Title = styled.h1`
   margin: 200px 0 80px;
   color: white;
-  font-size: 4em;
+  font-size: 3rem;
+  line-height: 3.75rem;
   font-family: ModernLove, serif;
+  text-align: center;
 `
 const CustomLink = styled(Link)`
   color: white;

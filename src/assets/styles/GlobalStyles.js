@@ -36,6 +36,13 @@ export default createGlobalStyle`
         background-size: cover;
         background-attachment: fixed;
         background-color: black;
+        font-size: .75rem;
+        line-height: 1rem;
+
+        @media (min-width: 600px) {
+            font-size: 1rem;
+            line-height: 1.25rem;
+        }
     }
     #modals {
         position: fixed;
