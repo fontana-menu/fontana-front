@@ -8,8 +8,9 @@ import RecipesModal from './RecipesModal'
 import { MdDeleteForever, MdEdit } from 'react-icons/md'
 import { deleteRecipe } from '../api/posts'
 import { motion, AnimatePresence } from 'framer-motion'
+import ExtraIngs from './ExtraIngs'
 
-const Group = ({ category, recipes, index, info = null }) => {
+const Group = ({ category, recipes, index, info }) => {
   const { setModal } = useContext(ModalContext)
   const location = useLocation()
   const [isVisible, setIsVisible] = useState(true)
@@ -57,8 +58,8 @@ const Group = ({ category, recipes, index, info = null }) => {
             transition={{ duration: 0.6 }}
           >
             {recipes.map((item, i, r) => (
-              <>
-                <Recipe isVisible={isVisible} key={item.id}>
+              <div key={item.id}>
+                <Recipe isVisible={isVisible}>
                   <Name>
                     {location.pathname === '/admin' ? (
                       <div style={{ display: 'flex', columnGap: '10px', alignItems: 'center' }}>
@@ -88,9 +89,9 @@ const Group = ({ category, recipes, index, info = null }) => {
                   </Name>
                   {item.description && <p>{item.description}</p>}
                 </Recipe>
-                {index === 7 && i === r.length - 1 && info}
-              </>
+              </div>
             ))}
+            {info && <ExtraIngs />}
           </Recipes>
         )}
       </AnimatePresence>

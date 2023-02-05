@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { getFood } from '../api/gets'
+import { getFood, getPizzas } from '../api/gets'
 import App from '../App'
-import Food from '../components/Food'
+import Food from '../components/Food/Food'
+import Pizzas from '../components/Food/Pizzas'
 import Home from '../components/Home'
 
 export default createBrowserRouter([
@@ -16,6 +17,11 @@ export default createBrowserRouter([
         path: '/carta',
         element: <Food />,
         loader: getFood
+      },
+      {
+        path: '/pedidos',
+        element: <Pizzas />,
+        loader: getPizzas
       }
     ]
   }

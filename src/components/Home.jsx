@@ -18,7 +18,10 @@ const Home = () => {
             <span>{lang === 'es' ? 'Restaurante' : 'Restaurant'}</span>
             <span>La Fontana</span>
           </Title>
-          <CustomLink to='/carta'>Carta</CustomLink>
+          <Links>
+            <CustomLink to='/carta'>Carta</CustomLink>
+            <CustomLink to='/pedidos'>Pedidos</CustomLink>
+          </Links>
         </>
       )}
     </Wrapper>
@@ -54,7 +57,16 @@ const Title = styled.h1`
     line-height: 5rem;
   }
 `
+const Links = styled.div`
+  display: flex;
+  column-gap: 25px;
+`
 const CustomLink = styled(Link)`
   color: white;
   font-size: 2em;
+
+  :before {
+    content: '🍕';
+    display: inline-block;
+  }
 `

@@ -6,6 +6,12 @@ export const getFood = async () => {
   return { menu }
 }
 
+export const getPizzas = async () => {
+  const res = await api.get('/food/pizzas')
+  const pizzas = res.data
+  return { pizzas }
+}
+
 export const getDrinks = () => api.get('/drinks')
 
 export const getRecipe = id => api.get(`food/${id}`)

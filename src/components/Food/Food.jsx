@@ -1,25 +1,14 @@
 import { useContext } from 'react'
-import styled from 'styled-components'
-import Group from './Group'
-import { Lang } from '../context/Lang.context'
+// import styled from 'styled-components'
+import Group from '../Group'
+import { Lang } from '../../context/Lang.context'
 import { motion } from 'framer-motion'
-import { copies } from '../utils/constants'
 import { /* Link,  */ useLoaderData } from 'react-router-dom'
-import Carta from './Carta'
+import Carta from '../Carta'
 
 const Food = () => {
   const { menu } = useLoaderData()
   const { lang } = useContext(Lang)
-
-  const ExtraIngredients = (
-    <>
-      <SuplsTitle>{copies[lang].title}</SuplsTitle>
-      <Text>{copies[lang].normal}</Text>
-      <Text>{copies[lang].special}</Text>
-      <Text>{copies[lang].smoked}</Text>
-      <Text2>{copies[lang].alergies}</Text2>
-    </>
-  )
 
   return (
     <motion.div
@@ -37,7 +26,7 @@ const Food = () => {
             category={item}
             recipes={menu[lang].recipes.filter(recipe => recipe.category === item)}
             key={i}
-            info={i === 7 ? ExtraIngredients : null}
+            info={i === 7}
           />
         ))}
       </Carta>
@@ -50,14 +39,3 @@ export default Food
   display: flex;
   align-items: center;
 ` */
-const SuplsTitle = styled.h3`
-  margin-top: 30px;
-  text-transform: uppercase;
-  text-decoration: underline;
-`
-const Text = styled.p`
-  line-height: 0.6rem;
-`
-const Text2 = styled.p`
-  margin-top: 15px;
-`
