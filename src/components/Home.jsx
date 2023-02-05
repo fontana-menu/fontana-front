@@ -14,7 +14,10 @@ const Home = () => {
         <Loading type='bubbles' color='#cccccc' width={'40%'} />
       ) : (
         <>
-          <Title>{lang === 'es' ? 'Restaurante La Fontana' : 'Restaurant La Fontana'}</Title>
+          <Title>
+            <span>{lang === 'es' ? 'Restaurante' : 'Restaurant'}</span>
+            <span>La Fontana</span>
+          </Title>
           <CustomLink to='/carta'>Carta</CustomLink>
         </>
       )}
@@ -32,12 +35,24 @@ const Wrapper = styled(motion.div)`
 `
 
 const Title = styled.h1`
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
   margin: 200px 0 80px;
   color: white;
   font-size: 3rem;
   line-height: 3.75rem;
   font-family: ModernLove, serif;
   text-align: center;
+
+  @media (min-width: 800px) {
+    flex-direction: unset;
+    column-gap: 1.3rem;
+  }
+  @media (min-width: 600px) {
+    font-size: 4rem;
+    line-height: 5rem;
+  }
 `
 const CustomLink = styled(Link)`
   color: white;
