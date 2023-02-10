@@ -4,13 +4,20 @@ import styled from 'styled-components'
 import { Lang } from '../context/Lang.context'
 import { AiOutlineLeft } from 'react-icons/ai'
 import { getApp } from '../utils/helpers'
-import useAuth from '../hooks/useAuth'
+import { logOut } from '../api/gets'
+import { Auth } from '../context/Auth.context'
 
 const Header = () => {
   const { lang, setLang } = useContext(Lang)
+  const { setIsLoggedIn } = useContext(Auth)
   const { pathname } = useLocation()
-  const { exit } = useAuth()
   const app = getApp()
+
+  const handleAdminLogOut = () => {
+    logOut()
+    setIsLoggedIn(false)
+  }
+
   return (
     <Wrapper>
       <Flags>
@@ -18,7 +25,7 @@ const Header = () => {
         <img onClick={() => setLang('cat')} src='/images/catalonia-icon-flag.png' alt='cat' width={35} />
       </Flags>
       {app === 'admin' && pathname !== '/' ? (
-        <LogOut onClick={exit}>
+        <LogOut onClick={handleAdminLogOut}>
           <AiOutlineLeft />
           Salir
         </LogOut>

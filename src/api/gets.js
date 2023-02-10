@@ -20,7 +20,6 @@ export const checkUser = async () => {
   try {
     const res = await api.get('/verify', { withCredentials: true })
     const user = res.data
-    console.log('The check response: ', user)
     return user
   } catch (err) {
     return err.response.data

@@ -20,7 +20,7 @@ const Home = () => {
           </Title>
           <Links>
             <CustomLink to='/carta'>Carta</CustomLink>
-            <CustomLink to='/domicilio'>Domicilio</CustomLink>
+            <CustomLink to='/domicilio'>{lang === 'es' ? 'Domicilio' : 'Domicili'}</CustomLink>
           </Links>
         </>
       )}
