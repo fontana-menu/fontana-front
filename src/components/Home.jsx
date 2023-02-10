@@ -20,7 +20,7 @@ const Home = () => {
           </Title>
           <Links>
             <CustomLink to='/carta'>Carta</CustomLink>
-            <CustomLink to='/domicilio'>Pedidos</CustomLink>
+            <CustomLink to='/domicilio'>Domicilio</CustomLink>
           </Links>
         </>
       )}

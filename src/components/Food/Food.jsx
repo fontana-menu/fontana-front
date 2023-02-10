@@ -7,7 +7,6 @@ import { /* Link,  */ Navigate, useLoaderData } from 'react-router-dom'
 import Carta from '../Carta'
 import { Auth } from '../../context/Auth.context'
 import { ModalContext } from '../../context/Modals.context'
-import Loading from 'react-loading'
 
 const Food = () => {
   const { menu } = useLoaderData()
@@ -43,8 +42,6 @@ export const AdminFood = () => {
   const { isLoggedIn } = useContext(Auth)
   const { menu } = useLoaderData()
   const { lang } = useContext(Lang)
-
-  if (isLoggedIn === undefined) return <Loading type='bubbles' />
 
   if (isLoggedIn === false) return <Navigate to='/' />
 

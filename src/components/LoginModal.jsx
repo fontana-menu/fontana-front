@@ -1,4 +1,6 @@
 import { useContext, useRef } from 'react'
+// import Loading from 'react-loading'
+import { Navigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { Auth } from '../context/Auth.context'
 import useAuth from '../hooks/useAuth'
@@ -9,12 +11,12 @@ const LoginModal = () => {
   const admin = useRef()
   const pass = useRef()
 
-  console.log('Login state: ', isLoggedIn)
-
   const handleSubmit = e => {
     e.preventDefault()
     logAdmin({ name: admin.current.value, password: pass.current.value })
   }
+
+  if (isLoggedIn) return <Navigate to='/carta' />
 
   return (
     <Wrapper>

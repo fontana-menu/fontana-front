@@ -1,15 +1,18 @@
-import { createContext, useLayoutEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { checkUser } from '../api/gets'
+import { getApp } from '../utils/helpers'
 
 export const Auth = createContext()
 
 const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  useLayoutEffect(() => {
-    checkUser().then(res => {
-      setIsLoggedIn(res.data.status)
-    })
+  useEffect(() => {
+    if (getApp() === 'admin') {
+      checkUser().then(res => {
+        setIsLoggedIn(res.status)
+      })
+    }
   }, [])
 
   return <Auth.Provider value={{ isLoggedIn, setIsLoggedIn }}>{children}</Auth.Provider>

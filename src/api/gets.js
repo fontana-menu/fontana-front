@@ -16,6 +16,15 @@ export const getDrinks = () => api.get('/drinks')
 
 export const getRecipe = id => api.get(`food/${id}`)
 
-export const checkUser = () => api.get('/verify', { withCredentials: true })
+export const checkUser = async () => {
+  try {
+    const res = await api.get('/verify', { withCredentials: true })
+    const user = res.data
+    console.log('The check response: ', user)
+    return user
+  } catch (err) {
+    return err.response.data
+  }
+}
 
 export const logOut = () => api.get('/logout', { withCredentials: true })
