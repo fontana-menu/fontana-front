@@ -45,8 +45,11 @@ export default createGlobalStyle`
         }
     }
     #modals {
-        position: fixed;
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100vw;
+        height: auto;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -77,6 +80,7 @@ export default createGlobalStyle`
         font-size: 1.3em;
         :hover {
             text-decoration: underline;
+            cursor: pointer;
         }
     }
 `

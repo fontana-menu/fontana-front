@@ -1,4 +1,4 @@
-import { Link, useNavigation } from 'react-router-dom'
+import { Link, Navigate, useNavigation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
 import { useContext } from 'react'
@@ -20,7 +20,7 @@ const Home = () => {
           </Title>
           <Links>
             <CustomLink to='/carta'>Carta</CustomLink>
-            <CustomLink to='/pedidos'>Pedidos</CustomLink>
+            <CustomLink to='/domicilio'>Pedidos</CustomLink>
           </Links>
         </>
       )}
@@ -29,6 +29,10 @@ const Home = () => {
 }
 
 export default Home
+
+export const AdminHome = () => {
+  return <Navigate to='/login' />
+}
 
 const Wrapper = styled(motion.div)`
   display: flex;

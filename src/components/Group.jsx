@@ -1,9 +1,8 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { FaChevronCircleDown } from 'react-icons/fa'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ModalContext } from '../context/Modals.context'
-import { createPortal } from 'react-dom'
 import RecipesModal from './RecipesModal'
 import { MdDeleteForever, MdEdit } from 'react-icons/md'
 import { deleteRecipe } from '../api/posts'
@@ -11,19 +10,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import ExtraIngs from './ExtraIngs'
 
 const Group = ({ category, recipes, index, info }) => {
-  const { setModal } = useContext(ModalContext)
-  const location = useLocation()
   const [isVisible, setIsVisible] = useState(true)
-  const navigate = useNavigate()
 
-  const handleDelete = async (id, name) => {
-    // eslint-disable-next-line no-restricted-globals
-    const conf = confirm(`Seguro que quieres eliminar la receta: ${name}?`)
-    if (!conf) return
-    const res = await deleteRecipe(id)
-    alert(res.data.message)
-    navigate(0)
-  }
   return (
     <>
       <Title>
@@ -33,21 +21,6 @@ const Group = ({ category, recipes, index, info }) => {
           {category === 'els nostres rostits' && <span style={{ textTransform: 'lowercase' }}> (per encàrrec)</span>}
         </H2>
         <Arrow onClick={() => setIsVisible(!isVisible)} unfolded={isVisible.toString()} />
-        {location.pathname === '/admin' && (
-          <button
-            onClick={() =>
-              setModal({
-                isVisible: true,
-                component: createPortal(
-                  <RecipesModal index={index} onClose={setModal} />,
-                  document.getElementById('modals')
-                )
-              })
-            }
-          >
-            Nueva Receta
-          </button>
-        )}
       </Title>
       <AnimatePresence initial={false}>
         {isVisible && (
@@ -61,26 +34,7 @@ const Group = ({ category, recipes, index, info }) => {
               <div key={item.id}>
                 <Recipe isVisible={isVisible}>
                   <Name>
-                    {location.pathname === '/admin' ? (
-                      <div style={{ display: 'flex', columnGap: '10px', alignItems: 'center' }}>
-                        <RecipeName>{item.name}</RecipeName>
-                        <DeleteIcon size={30} onClick={() => handleDelete(item.id, item.name)} />
-                        <EditIcon
-                          size={30}
-                          onClick={() =>
-                            setModal({
-                              isVisible: true,
-                              component: createPortal(
-                                <RecipesModal index={index} onClose={setModal} id={item.id} />,
-                                document.getElementById('modals')
-                              )
-                            })
-                          }
-                        />
-                      </div>
-                    ) : (
-                      <RecipeName>{item.name}</RecipeName>
-                    )}
+                    <RecipeName>{item.name}</RecipeName>
                     <span>
                       {item.price === 0.01
                         ? 'S/M'
@@ -100,6 +54,89 @@ const Group = ({ category, recipes, index, info }) => {
 }
 
 export default Group
+
+export const AdminGroup = ({ category, categoriesLists, recipes, index, info }) => {
+  const { setModal } = useContext(ModalContext)
+  const [isVisible, setIsVisible] = useState(true)
+  const navigate = useNavigate()
+
+  const handleDelete = async (id, name) => {
+    // eslint-disable-next-line no-restricted-globals
+    const conf = confirm(`Seguro que quieres eliminar la receta: ${name}?`)
+    if (!conf) return
+    const res = await deleteRecipe(id)
+    alert(res.data.message)
+    navigate('/carta')
+  }
+  return (
+    <>
+      <Title>
+        <H2 onClick={() => setIsVisible(!isVisible)}>
+          {category}
+          {category === 'nuestros asados' && <span style={{ textTransform: 'lowercase' }}> (por encargo)</span>}
+          {category === 'els nostres rostits' && <span style={{ textTransform: 'lowercase' }}> (per encàrrec)</span>}
+        </H2>
+        <Arrow onClick={() => setIsVisible(!isVisible)} unfolded={isVisible.toString()} />
+        <button
+          onClick={() =>
+            setModal({
+              isVisible: true,
+              component: <RecipesModal index={index} onClose={setModal} categories={categoriesLists} />
+            })
+          }
+        >
+          Nueva Receta
+        </button>
+      </Title>
+      <AnimatePresence initial={false}>
+        {isVisible && (
+          <Recipes
+            initial={{ scaleY: 0, height: 0, opacity: 0 }}
+            animate={{ scaleY: 1, height: 'auto', opacity: 1 }}
+            exit={{ scaleY: 0, height: 0, opacity: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            {recipes.map((item, i, r) => (
+              <div key={item.id}>
+                <Recipe isVisible={isVisible}>
+                  <Name>
+                    <div style={{ display: 'flex', columnGap: '10px', alignItems: 'center' }}>
+                      <RecipeName>{item.name}</RecipeName>
+                      <DeleteIcon size={30} onClick={() => handleDelete(item.id, item.name)} />
+                      <EditIcon
+                        size={30}
+                        onClick={() =>
+                          setModal({
+                            isVisible: true,
+                            component: (
+                              <RecipesModal
+                                index={index}
+                                onClose={setModal}
+                                id={item.id}
+                                categories={categoriesLists}
+                              />
+                            )
+                          })
+                        }
+                      />
+                    </div>
+                    <span>
+                      {item.price === 0.01
+                        ? 'S/M'
+                        : new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2 }).format(item.price)}
+                    </span>
+                  </Name>
+                  {item.description && <p>{item.description}</p>}
+                </Recipe>
+              </div>
+            ))}
+            {info && <ExtraIngs />}
+          </Recipes>
+        )}
+      </AnimatePresence>
+    </>
+  )
+}
 
 const Title = styled.div`
   display: flex;

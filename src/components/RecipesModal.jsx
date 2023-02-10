@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useLoaderData, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { createRecipe, editRecipe } from '../api/posts'
 import { getRecipe } from '../api/gets'
 
-const RecipesModal = ({ index, onClose, id = undefined }) => {
+const RecipesModal = ({ index, onClose, categories, id = undefined }) => {
   const [recipe, setRecipe] = useState(null)
-  const { menu } = useLoaderData()
   const navigate = useNavigate()
   const name_es = useRef()
   const description_es = useRef()
@@ -20,13 +19,13 @@ const RecipesModal = ({ index, onClose, id = undefined }) => {
       name: [name_es.current.value, name_cat.current.value],
       description: [description_es.current.value, description_cat.current.value],
       price: price.current.value,
-      category: [menu.es.categories[index], menu.cat.categories[index]]
+      category: [categories.es[index], categories.cat[index]]
     }
     try {
       const res = id ? await editRecipe(id, recipe) : await createRecipe(recipe)
       onClose({ isVisible: false, component: null })
       alert(res.data.message)
-      navigate(0)
+      navigate('/carta')
     } catch (error) {
       console.log('There has been an error: ', error)
     }
@@ -100,6 +99,10 @@ const BackDrop = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: #00000095;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
 `
 const Wrapper = styled.div`
   position: fixed;
@@ -107,6 +110,7 @@ const Wrapper = styled.div`
   padding: 30px 50px;
   background-color: white;
   border-radius: 50px;
+  z-index: 2;
 `
 const Form = styled.form`
   display: flex;

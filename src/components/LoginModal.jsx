@@ -1,13 +1,19 @@
-import { useRef } from 'react'
+import { useContext, useRef } from 'react'
 import styled from 'styled-components'
+import { Auth } from '../context/Auth.context'
+import useAuth from '../hooks/useAuth'
 
-const LoginModal = ({ login, error }) => {
+const LoginModal = () => {
+  const { isLoggedIn } = useContext(Auth)
+  const { logAdmin, error } = useAuth()
   const admin = useRef()
   const pass = useRef()
 
+  console.log('Login state: ', isLoggedIn)
+
   const handleSubmit = e => {
     e.preventDefault()
-    login({ name: admin.current.value, password: pass.current.value })
+    logAdmin({ name: admin.current.value, password: pass.current.value })
   }
 
   return (

@@ -1,10 +1,13 @@
 import { useContext } from 'react'
 // import styled from 'styled-components'
-import Group from '../Group'
+import Group, { AdminGroup } from '../Group'
 import { Lang } from '../../context/Lang.context'
 import { motion } from 'framer-motion'
-import { /* Link,  */ useLoaderData } from 'react-router-dom'
+import { /* Link,  */ Navigate, useLoaderData } from 'react-router-dom'
 import Carta from '../Carta'
+import { Auth } from '../../context/Auth.context'
+import { ModalContext } from '../../context/Modals.context'
+import Loading from 'react-loading'
 
 const Food = () => {
   const { menu } = useLoaderData()
@@ -34,6 +37,42 @@ const Food = () => {
   )
 }
 export default Food
+
+export const AdminFood = () => {
+  const { modal } = useContext(ModalContext)
+  const { isLoggedIn } = useContext(Auth)
+  const { menu } = useLoaderData()
+  const { lang } = useContext(Lang)
+
+  if (isLoggedIn === undefined) return <Loading type='bubbles' />
+
+  if (isLoggedIn === false) return <Navigate to='/' />
+
+  return (
+    <motion.div
+      style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+      initial={{ y: window.innerHeight }}
+      animate={{ y: 0 }}
+    >
+      {modal.isVisible && modal.component}
+      <Carta>
+        {/* <Heading>
+          <Link to='/vinos'>{lang === 'es' ? 'Bebidas' : 'Begudes'}</Link>
+        </Heading> */}
+        {menu[lang].categories.map((item, i) => (
+          <AdminGroup
+            index={i}
+            category={item}
+            categoriesLists={{ es: menu.es.categories, cat: menu.cat.categories }}
+            recipes={menu[lang].recipes.filter(recipe => recipe.category === item)}
+            key={i}
+            info={i === 7}
+          />
+        ))}
+      </Carta>
+    </motion.div>
+  )
+}
 
 /* const Heading = styled.div`
   display: flex;

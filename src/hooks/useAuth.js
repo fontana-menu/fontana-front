@@ -1,35 +1,37 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { checkUser, logOut } from '../api/gets'
 import { login } from '../api/posts'
 import { useNavigate } from 'react-router-dom'
+import { Auth } from '../context/Auth.context'
 
 const useAuth = () => {
-  const [isLogedIn, setIsLogedIn] = useState(false)
+  const { setIsLoggedIn } = useContext(Auth)
   const [error, setError] = useState(null)
   const navigate = useNavigate()
 
   const verify = async () => {
     const res = await checkUser()
     if (res.data.status === false) return setError(res.data)
-    setIsLogedIn(res.data.status)
+    setIsLoggedIn(res.data.status)
   }
 
   const logAdmin = async data => {
     try {
       if (error !== null) setError(null)
       const res = await login(data)
-      setIsLogedIn(res.data.status)
+      setIsLoggedIn(res.data.status)
+      navigate('/carta')
     } catch (error) {
       setError(error.response.data)
     }
   }
 
   const exit = () => {
-    setIsLogedIn(false)
     logOut()
-    navigate('/')
+    setIsLoggedIn(false)
+    // navigate('/')
   }
 
-  return { isLogedIn, logAdmin, verify, exit, error }
+  return { logAdmin, verify, exit, error }
 }
 export default useAuth
