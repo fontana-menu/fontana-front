@@ -24,10 +24,9 @@ const Food = () => {
         </Heading> */}
         {menu[lang].categories.map((item, i) => (
           <Group
-            index={i}
+            key={i}
             category={item}
             recipes={menu[lang].recipes.filter(recipe => recipe.category === item)}
-            key={i}
             info={i === 7}
           />
         ))}
@@ -58,11 +57,11 @@ export const AdminFood = () => {
         </Heading> */}
         {menu[lang].categories.map((item, i) => (
           <AdminGroup
+            key={i}
             index={i}
             category={item}
             categoriesLists={{ es: menu.es.categories, cat: menu.cat.categories }}
             recipes={menu[lang].recipes.filter(recipe => recipe.category === item)}
-            key={i}
             info={i === 7}
           />
         ))}

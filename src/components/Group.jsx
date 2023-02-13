@@ -9,7 +9,7 @@ import { deleteRecipe } from '../api/posts'
 import { motion, AnimatePresence } from 'framer-motion'
 import ExtraIngs from './ExtraIngs'
 
-const Group = ({ category, recipes, index, info }) => {
+const Group = ({ category, recipes, info }) => {
   const [isVisible, setIsVisible] = useState(true)
 
   return (

@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { getFood, getPizzas } from '../api/gets'
+import { getDeliveries, getFood } from '../api/gets'
 import Food, { AdminFood } from '../components/Food/Food'
 import Delivery, { AdminDelivery } from '../components/Food/Delivery'
 import Home from '../components/Home'
@@ -23,7 +23,7 @@ export default createBrowserRouter([
       {
         path: 'domicilio',
         element: <Delivery />,
-        loader: getPizzas
+        loader: getDeliveries
       }
     ]
   }
@@ -46,7 +46,7 @@ export const adminRoutes = createBrowserRouter([
       {
         path: 'domicilio',
         element: <AdminDelivery />,
-        loader: getPizzas
+        loader: getDeliveries
       }
     ]
   }
