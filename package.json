@@ -1,14 +1,18 @@
 {
   "name": "fontana-front",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@formkit/auto-animate": "^1.0.0-beta.5",
+    "@babel/core": "^7.21.0",
+    "@babel/plugin-syntax-flow": "^7.14.5",
+    "@babel/plugin-transform-react-jsx": "^7.14.9",
     "axios": "^1.2.0",
     "framer-motion": "^7.10.0",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
+    "react-is": "^18.2.0",
     "react-loading": "^2.0.3",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
@@ -39,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5"
   }
 }
