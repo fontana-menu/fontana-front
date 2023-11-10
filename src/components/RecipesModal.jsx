@@ -62,7 +62,7 @@ const RecipesModal = ({ index, onClose, categories, id = undefined }) => {
       <Wrapper>
         <Form onSubmit={e => handleNewRecipe(e)}>
           <h4>Precio</h4>
-          <input ref={price} style={{ textAlign: 'center' }} type='number' min={0} required step={1} />
+          <input ref={price} style={{ textAlign: 'center' }} type='number' min={0} required step={0.01} />
           <p>(Para que marque "S/M" pon el precio a 0.01)</p>
           <h4>Nombre</h4>
           <Label>
