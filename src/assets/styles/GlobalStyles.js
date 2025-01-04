@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 import CenturyGothic from '../fonts/century-gothic/CenturyGothic.ttf';
 import CenturyGothicBold from '../fonts/century-gothic/gothicb.ttf';
 import CenturyGothicItalic from '../fonts/century-gothic/gothici.ttf';
-import ModernLoveRegular from '../fonts/ModernLoveRegular.ttf';
+import DeliciousHandrawn from '../fonts/DeliciousHandrawn-Regular.ttf';
 
 export default createGlobalStyle`
     @font-face {
@@ -21,8 +21,10 @@ export default createGlobalStyle`
         font-style: italic;
     }
     @font-face {
-        font-family: ModernLove;
-        src: local(ModernLove), url(${ModernLoveRegular});
+        font-family: DeliciousHandrawn;
+        src: local(DeliciousHandrawn), url(${DeliciousHandrawn});
+        font-style: normal;
+        font-weight: normal;
     }
     * {
         box-sizing: border-box;

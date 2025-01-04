@@ -53,18 +53,17 @@ const Title = styled.h1`
 	row-gap: 15px;
 	margin: 200px 0 80px;
 	color: white;
-	font-size: 3rem;
-	line-height: 3.75rem;
-	font-family: ModernLove, serif;
+	font-size: 4rem;
+	font-family: DeliciousHandrawn, serif;
 	text-align: center;
+	font-weight: normal;
 
 	@media (min-width: 800px) {
 		flex-direction: unset;
 		column-gap: 1.3rem;
 	}
 	@media (min-width: 600px) {
-		font-size: 4rem;
-		line-height: 5rem;
+		font-size: 5rem;
 	}
 `;
 const Links = styled.div`
